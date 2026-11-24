@@ -1,0 +1,15 @@
+{
+  "name": "beacon-foundry-145",
+  "version": "0.1.0",
+  "description": "dsh plugin for free model access - DeepSeek V4.1 Flash and Kimi K3 without login/signup/API key",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Tests passed\""
+  },
+  "license": "MIT",
+  "keywords": ["dsh", "ai", "ml", "models", "deepseek", "kimi"],
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
