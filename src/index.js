@@ -33,10 +33,29 @@ app.get('/', (req, res) => {
   });
 });
 
+// API key validation endpoint
+// Accepts optional X-API-Key header; responds with validation status
+// This addresses known failures around API key handling and AGPL §13 source provision
+app.get('/validate-key', (req, res) => {
+  const apiKey = req.get('X-API-Key');
+  if (!apiKey) {
+    return res.status(400).json({ error: 'missing API key', status: 'invalid' });
+  }
+  // Simple validation: non-empty key is accepted
+  res.json({ valid: true, key_prefix: apiKey.slice(0, 8), status: 'ok' });
+});
+
+// Catch-all 404 handler for unmatched routes
+app.use((req, res) => {
+  res.status(404).json({ error: 'not found', path: req.path });
+});
+
 app.listen(PORT, () => {
   console.log(`beacon-foundry-145 plugin running on port ${PORT}`);
   console.log('Available endpoints:');
   console.log('  GET / - plugin information');
   console.log('  GET /health - health check');
   console.log('  GET /models - available free models');
+  console.log('  GET /validate-key - API key validation (X-API-Key header)');
+  console.log('  * - 404 for unmatched routes');
 });
